@@ -1,20 +1,76 @@
-// 3D-Scratch.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
-//
-
+#include "olcConsoleGameEngine.h"
 #include <iostream>
+using namespace std;
+struct Vector3
+{
+    float x = 0;
+    float y = 0;
+    float z = 0;
+};
+struct Triangle
+{
+    Vector3 p[3];
+};
+
+struct mesh
+{
+    vector<Triangle> triangles;
+};
+class Engine3D : public olcConsoleGameEngine
+{
+private:
+    mesh _cube;
+public:
+
+    Engine3D()
+    {
+        m_sAppName = L"3D Scratch";
+
+    }
+    bool OnUserCreate() override
+    {
+        _cube.triangles = {
+            //SOUTH
+
+            {0.0f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f, 0.0f},
+            {0.0f, 0.0f, 0.0f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f},
+
+            //EAST
+            {1.0f, 0.0f, 0.0f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f, 1.0f},
+            {1.0f, 0.0f, 0.0f,  1.0f, 1.0f, 1.0f,  1.0f, 0.0f, 1.0f},
+
+            //NORTH
+            {1.0f, 0.0f, 1.0f,  1.0f, 1.0f, 1.0f,  0.0f, 1.0f, 1.0f},
+			{1.0f, 0.0f, 1.0f,  0.0f, 1.0f, 1.0f,  0.0f, 0.0f, 1.0f},
+            //WEST
+            {0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 1.0f,  0.0f, 1.0f, 0.0f},
+			{0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, 0.0f},
+            //TOP
+			{0.0f, 1.0f, 0.0f,  0.0f, 1.0f, 1.0f,  1.0f, 1.0f, 1.0f},
+            {0.0f, 1.0f, 0.0f,  1.0f, 1.0f, 1.0f,  1.0f, 1.0f, 0.0f},
+			//BOTTOM
+            {1.0f, 0.0f, 1.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f, 0.0f},
+			{1.0f, 0.0f, 1.0f,  0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f}
+        };
+        return true;
+
+    }
+    bool OnUserUpdate(float fElapsedTime) override
+    {
+		Fill(0, 0, ScreenWidth(), ScreenHeight(), PIXEL_SOLID,FG_BLACK);
+        for (auto triangles: _cube.triangles) 
+        {
+        }
+        return true;    
+	}
+};
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	Engine3D demo;
+    if (demo.ConstructConsole(256,240,4,4)) 
+    {
+		demo.Start();
+    }
 }
 
-// Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
-// Depurar programa: F5 ou menu Depurar > Iniciar Depuração
-
-// Dicas para Começar: 
-//   1. Use a janela do Gerenciador de Soluções para adicionar/gerenciar arquivos
-//   2. Use a janela do Team Explorer para conectar-se ao controle do código-fonte
-//   3. Use a janela de Saída para ver mensagens de saída do build e outras mensagens
-//   4. Use a janela Lista de Erros para exibir erros
-//   5. Ir Para o Projeto > Adicionar Novo Item para criar novos arquivos de código, ou Projeto > Adicionar Item Existente para adicionar arquivos de código existentes ao projeto
-//   6. No futuro, para abrir este projeto novamente, vá para Arquivo > Abrir > Projeto e selecione o arquivo. sln
